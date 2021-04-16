@@ -6,6 +6,7 @@ const { app, BrowserWindow, Tray } = electron;
 let mainWindow, tray;
 
 app.once('ready', () => {
+  app.dock.hide();
   mainWindow = new BrowserWindow({
     webPreferences: {
       nodeIntegration: true,
@@ -18,6 +19,10 @@ app.once('ready', () => {
     show: false
   });
   mainWindow.loadURL(`file://${__dirname}/src/index.html`);
+  // blur - trigerred when the user isn't focused on the window
+  mainWindow.on('blur', () => {
+    mainWindow.hide();
+  });
 
   const iconName =
     process.platform === 'win32' || process.platform === 'linux'
