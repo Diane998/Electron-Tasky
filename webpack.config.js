@@ -4,18 +4,16 @@ var fs = require('fs');
 
 var nodeModules = {};
 fs.readdirSync('node_modules')
-  .filter(function(x) {
+  .filter(function (x) {
     return ['.bin'].indexOf(x) === -1;
   })
-  .forEach(function(mod) {
+  .forEach(function (mod) {
     nodeModules[mod] = 'commonjs ' + mod;
   });
 
 module.exports = {
   externals: nodeModules,
-  entry: [
-    './src/index.js'
-  ],
+  entry: ['./src/index.js'],
   target: 'node',
   output: {
     path: __dirname,
@@ -30,7 +28,7 @@ module.exports = {
         query: {
           presets: ['react', 'es2015', 'stage-1']
         }
-      },
+      }
     ]
   },
   resolve: {
