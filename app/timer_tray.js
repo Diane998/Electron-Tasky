@@ -6,6 +6,8 @@ class TimerTray extends Tray {
     super(iconPath);
 
     this.mainWindow = mainWindow;
+
+    this.setToolTip('Tasky');
     this.on('click', this.onClick);
   }
 
