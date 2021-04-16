@@ -1,28 +1,27 @@
 const path = require('path'),
   electron = require('electron'),
-  TimerTray = require('./app/timer_tray');
+  TimerTray = require('./app/timer_tray'),
+  MainWindow = require('./app/main_window');
 const { app, BrowserWindow, Tray } = electron;
 
 let mainWindow, tray;
 
 app.once('ready', () => {
-  app.dock.hide();
-  mainWindow = new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+  mainWindow = new MainWindow(
+    {
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      },
+      height: 500,
+      width: 300,
+      frame: false,
+      resizable: false,
+      show: false,
+      skipTaskbar: true
     },
-    height: 500,
-    width: 300,
-    frame: false,
-    resizable: false,
-    show: false
-  });
-  mainWindow.loadURL(`file://${__dirname}/src/index.html`);
-  // blur - trigerred when the user isn't focused on the window
-  mainWindow.on('blur', () => {
-    mainWindow.hide();
-  });
+    `file://${__dirname}/src/index.html`
+  );
 
   const iconName =
     process.platform === 'win32' || process.platform === 'linux'
